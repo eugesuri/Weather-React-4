@@ -81,6 +81,17 @@ export default function Weather() {
               <div className="weather-forecast-date"></div>
               {weatherData.actualdate}
             </div>
+            <footer>
+              This project was coded by <em> Eugenia Brunetti Ehnimb</em>
+              and is
+              <a
+                href="https://github.com/eugesuri/Weather-React-4"
+                target="_blank"
+              >
+                open sourced on Github{" "}
+              </a>
+              🌸
+            </footer>
           </div>
         </div>
       </div>
