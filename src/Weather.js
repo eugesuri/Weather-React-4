@@ -86,7 +86,7 @@ export default function Weather() {
       </div>
       <footer>
         This project was coded by <em> Eugenia Brunetti Ehnimb</em>
-        {""} and is
+        {""} and is{""}
         <a href="https://github.com/eugesuri/Weather-React-4" target="_blank">
           open sourced on Github{" "}
         </a>
