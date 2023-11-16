@@ -1,89 +1,45 @@
 import React from "react";
+import App from "./App";
+import axios from "axios";
 
 import "./Weather.css";
 
-export default function Weather() {
-  let weatherData = {
-    city: "Zürich",
-    date: "Friday 10:00",
-    description: "Cloudy",
-    imgUrl: "//ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
-    humidity: 80,
-    wind: 60,
-    actualdate: "Friday 27th October",
-  };
+export default function SearchEngine(props) {
+  let [city, setCity] = useState("");
+  let [submitted, setSubmitted] = useState(false);
+  let [temperature, setTemperature] = useState(null);
+  let [loading, setLoading] = useState(false);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setLoading(true);
+
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=57821c3b75b60c68ecd1a8d0dd1aa8d3&units=metric`;
+
+    axios.get(url).then((response) => {
+      setTemperature(response.data.main.temp);
+      setSubmitted(true);
+      setLoading(false);
+    });
+  }
+
+  function updateCity(event) {
+    setCity(event.target.value);
+  }
 
   return (
-    <div className="Weather">
-      <div className="weather-app">
-        <form className="mb-3">
-          <div className="row">
-            <div className="col-9">
-              <input
-                type="search"
-                placeholder="Type a city..."
-                className="form-control"
-                autocomplete="off"
-              />
-            </div>
-            <div className="col-3">
-              <input
-                type="submit"
-                value="Search"
-                className="btn btn-primary w-100"
-              />
-            </div>
-          </div>
-        </form>
-
-        <div className="overview">
-          <h1>
-            <strong> {weatherData.city} </strong>{" "}
-          </h1>
-          <ul>
-            <li>
-              Last updated: {weatherData.date}
-              <span></span>
-            </li>
-            <li> {weatherData.description}</li>
-          </ul>
-        </div>
-        <div className="row">
-          <div className="col-6">
-            <div className="d-flex weather-temperature">
-              <img src={weatherData.imgUrl} id="icon" />
-              <div>
-                <strong></strong>
-                <span className="units">
-                  {" "}
-                  12
-                  <a href="/"> °C</a> |<a href="/"> °F </a>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="col-6">
-            <ul>
-              <li>
-                <i className="fa-solid fa-droplet"></i> Humidity:
-                <span> {weatherData.humidity} </span>%
-              </li>
-              <li>
-                <i className="fa-solid fa-wind"></i> Wind:
-                <span> {weatherData.wind}</span>km/h
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="weather-forecast">
-          <div className="row">
-            <div className="col-2">
-              <div className="weather-forecast-date"></div>
-              {weatherData.actualdate}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1>Search Engine</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="search" onChange={updateCity} />
+        <input type="submit" value="Search" />
+      </form>
+      {loading && <p>Loading...</p>}
+      {submitted && city && (
+        <h2>
+          It's {Math.round(temperature)}°C in {city}
+        </h2>
+      )}
       <footer>
         This project was coded by <em> Eugenia Brunetti Ehnimb</em>
         {""} and is open sourced on {""}

@@ -10,5 +10,6 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <Weather />
+    <App />
   </StrictMode>
 );
